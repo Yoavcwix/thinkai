@@ -1,0 +1,228 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout
+  title="About"
+  description="Learn about the person behind ThinkAI — an AI educator helping individuals and teams work smarter."
+>
+  <Navigation currentPath="/about" />
+
+  <main>
+    <!-- Hero -->
+    <section class="about-hero grid-bg">
+      <div class="section-container">
+        <div class="about-hero__inner">
+          <div class="about-hero__content reveal">
+            <span class="tag">About</span>
+            <h1 class="about-hero__headline">
+              AI should feel like a<br />
+              <em class="em-gradient">superpower</em>, not a mystery.
+            </h1>
+            <p class="about-hero__bio">
+              I've spent the last three years helping professionals — from solo operators to Fortune 500 teams — cut through the AI hype and build real, repeatable workflows that make them genuinely better at their work.
+            </p>
+            <p class="about-hero__bio">
+              Before ThinkAI, I spent a decade in tech building products and leading teams. I got obsessed with AI tools early — not as a hobbyist, but as someone who needed them to work. The gap between what AI can do and what most people know how to do with it is enormous. That gap is why ThinkAI exists.
+            </p>
+            <div class="about-hero__actions">
+              <a href="/workshops" class="btn-primary">Explore Workshops</a>
+              <a href="/contact" class="btn-outline">Get in Touch</a>
+            </div>
+          </div>
+
+          <div class="about-hero__photo reveal reveal-2">
+            <div class="photo-frame">
+              <!-- Placeholder for headshot -->
+              <div class="photo-placeholder">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <circle cx="24" cy="18" r="10" stroke="rgba(34,211,238,0.4)" stroke-width="2"/>
+                  <path d="M8 44c0-8.84 7.16-16 16-16s16 7.16 16 16" stroke="rgba(34,211,238,0.4)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="photo-glow" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- Values -->
+    <section class="values-section">
+      <div class="section-container">
+        <header class="section-header reveal">
+          <span class="accent-rule"></span>
+          <h2>What I believe about AI</h2>
+        </header>
+
+        <div class="values-grid">
+          <div class="value-item reveal reveal-1">
+            <span class="value-number">01</span>
+            <h3>AI is a thinking tool, not a replacement</h3>
+            <p>The most dangerous thing AI can do is let you stop thinking. My workshops are designed to sharpen your thinking with AI, not outsource it.</p>
+          </div>
+          <div class="value-item reveal reveal-2">
+            <span class="value-number">02</span>
+            <h3>Practical beats theoretical, every time</h3>
+            <p>I don't teach you about AI — I teach you to use it. Every concept is tied to a real workflow. If you can't use it tomorrow, it's not worth your time.</p>
+          </div>
+          <div class="value-item reveal reveal-3">
+            <span class="value-number">03</span>
+            <h3>The tools will change. The principles won't.</h3>
+            <p>I don't teach you specific products — I teach you the reasoning behind them. That's the only thing that will still be useful in two years.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- Quick CTA -->
+    <section class="about-cta">
+      <div class="section-container">
+        <div class="about-cta__inner reveal">
+          <h2>Let's work together</h2>
+          <p>Whether you want to attend a public workshop or bring AI training to your team, I'd love to hear what you're working on.</p>
+          <a href="/contact" class="btn-primary">Book a Free Call</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .about-hero {
+    padding: 8rem 0 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 60% at 80% 40%, rgba(34,211,238,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .about-hero__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-hero__content { display: flex; flex-direction: column; gap: 1.5rem; }
+  .about-hero__headline {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 0;
+  }
+  .em-gradient {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .about-hero__bio {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.75;
+    max-width: 38rem;
+    margin: 0;
+  }
+  .about-hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  /* Photo */
+  .about-hero__photo { flex-shrink: 0; }
+  .photo-frame {
+    position: relative;
+    width: 280px; height: 320px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid rgba(34,211,238,0.2);
+  }
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    background: var(--color-secondary);
+    display: grid;
+    place-items: center;
+    background-image: linear-gradient(135deg, rgba(34,211,238,0.04), rgba(245,158,11,0.04));
+  }
+  .photo-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(ellipse at center, rgba(34,211,238,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Values */
+  .values-section { padding: var(--space-section) 0; }
+  .section-header { margin-bottom: 3rem; }
+  .section-header h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); margin-bottom: 0; }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .value-item {
+    background: var(--color-secondary);
+    border: 1px solid rgba(34,211,238,0.1);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: border-color 0.2s;
+  }
+  .value-item:hover { border-color: rgba(34,211,238,0.25); }
+  .value-number {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    letter-spacing: 0.1em;
+  }
+  .value-item h3 { font-size: 1.0625rem; margin: 0; color: var(--color-text); }
+  .value-item p { color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.65; margin: 0; }
+
+  /* CTA */
+  .about-cta { padding: var(--space-section) 0; }
+  .about-cta__inner {
+    background: var(--color-secondary);
+    border: 1px solid rgba(34,211,238,0.15);
+    border-radius: var(--radius-xl);
+    padding: 3.5rem;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-cta__inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(34,211,238,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .about-cta__inner h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); margin: 0; position: relative; }
+  .about-cta__inner p { color: var(--color-text-muted); max-width: 36rem; margin: 0; position: relative; }
+  .about-cta__inner .btn-primary { position: relative; }
+
+  @media (max-width: 900px) {
+    .about-hero__inner { grid-template-columns: 1fr; }
+    .about-hero__photo { display: none; }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .values-grid { grid-template-columns: 1fr; }
+    .about-cta__inner { padding: 2rem; }
+  }
+</style>

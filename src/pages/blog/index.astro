@@ -1,0 +1,157 @@
+---
+// Blog index — features skill will replace samplePosts with @wix/blog SDK query
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+import BlogCard from "../../components/BlogCard.astro";
+
+interface BlogPost {
+  title: string;
+  excerpt: string;
+  slug: string;
+  coverImage?: string;
+  publishedDate?: string;
+  readingTime?: string;
+  tag?: string;
+}
+
+// Placeholder — features skill replaces with: const posts = await queryBlogPosts(...)
+const posts: BlogPost[] = [
+  {
+    title: "5 AI Tools That Will Actually Save You Time This Week",
+    excerpt: "Not another list of hype tools. These are the five AI workflows I recommend to every workshop participant — practical, tested, and immediately useful.",
+    slug: "5-ai-tools-save-time",
+    publishedDate: "Apr 8, 2026",
+    readingTime: "6 min read",
+    tag: "Productivity",
+  },
+  {
+    title: "Why Most AI Prompts Fail (And How to Fix Them)",
+    excerpt: "The biggest mistake people make when using AI isn't the tool they choose — it's how they ask. Here's the framework I teach in every workshop.",
+    slug: "why-ai-prompts-fail",
+    publishedDate: "Apr 1, 2026",
+    readingTime: "8 min read",
+    tag: "Prompting",
+  },
+  {
+    title: "AI Isn't Coming For Your Job. But This Might Be.",
+    excerpt: "The real risk isn't replacement — it's falling behind colleagues and competitors who learn to use AI effectively. Let's talk honestly about what that means.",
+    slug: "ai-isnt-coming-for-your-job",
+    publishedDate: "Mar 24, 2026",
+    readingTime: "5 min read",
+    tag: "Big Picture",
+  },
+  {
+    title: "How I Use AI to Prep for Every Workshop",
+    excerpt: "Behind the scenes of how I design and customise each session — from research and persona building to generating exercises and checking for blind spots.",
+    slug: "how-i-use-ai-to-prep",
+    publishedDate: "Mar 17, 2026",
+    readingTime: "7 min read",
+    tag: "Meta",
+  },
+  {
+    title: "The One Prompt Rule That Changes Everything",
+    excerpt: "If you only learn one thing from me, it's this: your AI is only as good as the context you give it. Here's the simplest framework for structuring any prompt.",
+    slug: "one-prompt-rule",
+    publishedDate: "Mar 10, 2026",
+    readingTime: "4 min read",
+    tag: "Prompting",
+  },
+  {
+    title: "What 500 Workshop Participants Taught Me About AI Adoption",
+    excerpt: "After hundreds of hours in rooms with people learning AI for the first time, I've noticed patterns. Here's what actually holds people back — and what unlocks everything.",
+    slug: "500-participants-ai-adoption",
+    publishedDate: "Mar 3, 2026",
+    readingTime: "9 min read",
+    tag: "Insights",
+  },
+];
+---
+
+<Layout
+  title="Blog"
+  description="Honest takes on AI, learning, and working smarter from ThinkAI."
+>
+  <Navigation currentPath="/blog" />
+
+  <main>
+    <!-- Hero -->
+    <section class="blog-hero grid-bg">
+      <div class="section-container">
+        <div class="blog-hero__content reveal">
+          <span class="tag">Blog</span>
+          <h1>
+            Honest takes on<br />
+            <em class="em-gradient">AI that matters.</em>
+          </h1>
+          <p>No hype, no doom, no filler. Just useful thinking about working with AI.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- Posts grid -->
+    <section class="blog-posts-section">
+      <div class="section-container">
+        <div class="blog-posts-grid">
+          {posts.map((post, i) => (
+            <div class={`reveal reveal-${(i % 3) + 1}`}>
+              <BlogCard {...post} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .blog-hero {
+    padding: 8rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .blog-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 60% at 65% 50%, rgba(34,211,238,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .blog-hero__content {
+    max-width: 520px;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .blog-hero__content h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0;
+  }
+  .em-gradient {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .blog-hero__content p { color: var(--color-text-muted); font-size: 1rem; margin: 0; }
+
+  .blog-posts-section { padding: var(--space-section) 0; }
+  .blog-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .blog-posts-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .blog-posts-grid { grid-template-columns: 1fr; }
+  }
+</style>

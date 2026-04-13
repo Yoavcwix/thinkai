@@ -1,0 +1,195 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap');
+
+/* Page Color Strategy: Uniform Dark
+   All pages use dark backgrounds. Nav and footer use the dark variant.
+   --color-bg-alt is used for card surfaces and inputs (guaranteed contrast over --color-bg). */
+
+:root {
+  /* Brand colors — Signal aesthetic */
+  --color-primary: #22D3EE;          /* Electric cyan */
+  --color-secondary: #0A1628;        /* Deep navy surface */
+  --color-accent: #F59E0B;           /* Warm amber spark */
+  --color-bg: #050D1B;               /* Deep space navy (page bg) */
+  --color-bg-alt: #0F2235;           /* Slightly lighter navy for inputs/cards */
+  --color-text: #E2E8F0;             /* Near-white */
+  --color-text-muted: #94A3B8;       /* Muted blue-gray */
+
+  /* Typography */
+  --font-display: "Syne", sans-serif;
+  --font-body: "Outfit", sans-serif;
+
+  /* Spacing */
+  --space-section: 5rem;
+  --space-content: 2rem;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+  /* Glow effects */
+  --glow-primary: 0 0 20px rgba(34, 211, 238, 0.15);
+  --glow-primary-strong: 0 0 40px rgba(34, 211, 238, 0.3);
+  --glow-accent: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+/* ── Base Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  margin: 0;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-text);
+  margin-top: 0;
+}
+
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { color: var(--color-accent); }
+
+img { max-width: 100%; display: block; }
+
+/* ── Decorative Grid Background ── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── Utility: Accent Rule ── */
+.accent-rule {
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 2px;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Section Container ── */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.875rem;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover {
+  background: #38E3FF;
+  color: var(--color-bg);
+  box-shadow: var(--glow-primary-strong);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.875rem;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+.btn-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(34, 211, 238, 0.06);
+}
+
+/* ── Reveal Animations ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes subtleFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+.reveal {
+  opacity: 0;
+  animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.reveal-1 { animation-delay: 0.1s; }
+.reveal-2 { animation-delay: 0.2s; }
+.reveal-3 { animation-delay: 0.3s; }
+.reveal-4 { animation-delay: 0.4s; }
+.reveal-5 { animation-delay: 0.5s; }
+
+/* ── Section Divider ── */
+.section-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.2), transparent);
+  margin: 0;
+}
+
+/* ── Badge / Tag ── */
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--color-primary);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tag-amber {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--color-accent);
+  border-color: rgba(245, 158, 11, 0.25);
+}

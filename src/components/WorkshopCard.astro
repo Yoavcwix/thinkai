@@ -1,0 +1,177 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  format: string;       // e.g. "Online", "In-Person", "Hybrid"
+  duration: string;     // e.g. "Half-day", "Full-day", "4 weeks"
+  audience: string;     // e.g. "Beginners", "Teams", "Leaders"
+  price: string;        // formatted price string
+  image?: string;       // Wix CDN URL
+  slug: string;
+}
+
+const { title, description, format, duration, audience, price, image, slug } = Astro.props;
+
+const formatColors: Record<string, string> = {
+  "Online": "tag",
+  "In-Person": "tag-amber",
+  "Hybrid": "tag",
+};
+const tagClass = formatColors[format] ?? "tag";
+---
+
+<a href={`/workshops/${slug}`} class="workshop-card">
+  <div class="workshop-card__image">
+    {image ? (
+      <img src={image} alt={title} loading="lazy" />
+    ) : (
+      <div class="workshop-card__placeholder">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="rgba(34,211,238,0.25)" stroke-width="2"/>
+          <path d="M13 20l5 5 9-10" stroke="rgba(34,211,238,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    )}
+    <span class:list={["workshop-card__format", tagClass]}>{format}</span>
+  </div>
+
+  <div class="workshop-card__body">
+    <h3 class="workshop-card__title">{title}</h3>
+    <p class="workshop-card__desc">{description}</p>
+
+    <div class="workshop-card__meta">
+      <span class="meta-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M7 4v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        {duration}
+      </span>
+      <span class="meta-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M7 7a3 3 0 100-6 3 3 0 000 6zM2 13c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        {audience}
+      </span>
+    </div>
+
+    <div class="workshop-card__footer">
+      <span class="workshop-card__price">{price}</span>
+      <span class="workshop-card__cta">Learn more →</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .workshop-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-secondary);
+    border: 1px solid rgba(34, 211, 238, 0.1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .workshop-card:hover {
+    border-color: rgba(34, 211, 238, 0.35);
+    box-shadow: var(--glow-primary);
+    transform: translateY(-3px);
+  }
+
+  /* Image */
+  .workshop-card__image {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--color-bg-alt);
+  }
+  .workshop-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .workshop-card:hover .workshop-card__image img {
+    transform: scale(1.04);
+  }
+  .workshop-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background:
+      linear-gradient(135deg, rgba(34, 211, 238, 0.05) 0%, rgba(245, 158, 11, 0.05) 100%);
+  }
+  .workshop-card__format {
+    position: absolute;
+    top: 0.875rem;
+    left: 0.875rem;
+  }
+
+  /* Body */
+  .workshop-card__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.75rem;
+  }
+  .workshop-card__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.25;
+  }
+  .workshop-card__desc {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Meta */
+  .workshop-card__meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+  }
+  .meta-item svg { flex-shrink: 0; }
+
+  /* Footer */
+  .workshop-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.875rem;
+    border-top: 1px solid rgba(34, 211, 238, 0.08);
+  }
+  .workshop-card__price {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-primary);
+  }
+  .workshop-card__cta {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .workshop-card:hover .workshop-card__cta {
+    color: var(--color-primary);
+  }
+</style>

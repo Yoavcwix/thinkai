@@ -1,0 +1,187 @@
+---
+// CMS-managed page — features skill will replace sampleTestimonials with @wix/data query
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
+
+interface Testimonial {
+  quote: string;
+  authorName: string;
+  role?: string;
+  photo?: string;
+}
+
+// Placeholder — features skill replaces with: const testimonials = await queryDataItems(...)
+const testimonials: Testimonial[] = [
+  {
+    quote: "I've been to a lot of AI talks and demos. This was the first one that actually changed how I work. Within a week I'd rebuilt three of my core workflows with AI — and I'm saving at least 2 hours a day.",
+    authorName: "Sarah M.",
+    role: "Product Manager, fintech",
+  },
+  {
+    quote: "I was skeptical going in — I thought AI was just for tech people. Two hours in, I was building things I didn't think were possible. ThinkAI demystified everything in the best way.",
+    authorName: "James T.",
+    role: "Marketing Director",
+  },
+  {
+    quote: "We brought ThinkAI in for a full-day team session. The facilitator had done their homework on our industry. Every example was relevant. Our team left genuinely excited, not just politely nodding.",
+    authorName: "Priya K.",
+    role: "Head of Operations, consulting firm",
+  },
+  {
+    quote: "The prompt engineering session was exactly what I needed. I'd been using AI like a search engine. Now I understand it as a reasoning partner. Completely changed my approach.",
+    authorName: "David L.",
+    role: "Freelance Writer",
+  },
+  {
+    quote: "As a CEO, I needed to get up to speed without being sold on hype. The Executive Briefing was honest, fast, and practical. I came out knowing exactly what we should and shouldn't be investing in.",
+    authorName: "Noa E.",
+    role: "CEO, design agency",
+  },
+  {
+    quote: "One of the best professional development investments I've made this year. I immediately applied the frameworks to three different client projects. The ROI was obvious within days.",
+    authorName: "Rachel V.",
+    role: "Strategy Consultant",
+  },
+];
+---
+
+<Layout
+  title="Testimonials"
+  description="What participants say about ThinkAI workshops."
+>
+  <Navigation currentPath="/testimonials" />
+
+  <main>
+    <!-- Hero -->
+    <section class="testimonials-hero grid-bg">
+      <div class="section-container">
+        <div class="testimonials-hero__content reveal">
+          <span class="tag">Testimonials</span>
+          <h1>
+            What participants<br />
+            <em class="em-gradient">actually say.</em>
+          </h1>
+          <p>Real feedback from real professionals. No cherry-picked soundbites — just what happened when people took a workshop.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- Testimonials grid -->
+    <section class="testimonials-grid-section">
+      <div class="section-container">
+        <div class="testimonials-grid">
+          {testimonials.map((t, i) => (
+            <div class={`reveal reveal-${(i % 3) + 1}`}>
+              <TestimonialCard {...t} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- CTA -->
+    <section class="testimonials-cta">
+      <div class="section-container">
+        <div class="testimonials-cta__inner reveal">
+          <h2>Join them.</h2>
+          <p>Book a free 20-minute call and let's find the right workshop for you.</p>
+          <a href="/contact" class="btn-primary">Book a Free Call</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .testimonials-hero {
+    padding: 8rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonials-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 60% at 60% 50%, rgba(34,211,238,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .testimonials-hero__content {
+    max-width: 560px;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .testimonials-hero__content h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0;
+  }
+  .em-gradient {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .testimonials-hero__content p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
+    max-width: 36rem;
+  }
+
+  .testimonials-grid-section { padding: var(--space-section) 0; }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .testimonials-cta { padding: var(--space-section) 0; }
+  .testimonials-cta__inner {
+    background: var(--color-secondary);
+    border: 1px solid rgba(34,211,238,0.15);
+    border-radius: var(--radius-xl);
+    padding: 4rem;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonials-cta__inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(34,211,238,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .testimonials-cta__inner h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    margin: 0;
+    position: relative;
+  }
+  .testimonials-cta__inner p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    margin: 0;
+    position: relative;
+  }
+  .testimonials-cta__inner .btn-primary { position: relative; }
+
+  @media (max-width: 900px) {
+    .testimonials-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .testimonials-cta__inner { padding: 2rem; }
+  }
+</style>

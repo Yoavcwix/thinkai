@@ -1,0 +1,253 @@
+---
+// Blog post detail — features skill will wire up @wix/blog SDK and RicosViewer React island
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+
+// Placeholder static generation — features skill replaces with getStaticPaths() from Wix Blog
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+// Placeholder post data — features skill replaces with: const post = await getBlogPost(slug)
+const post = {
+  title: "Why Most AI Prompts Fail (And How to Fix Them)",
+  excerpt: "The biggest mistake people make when using AI isn't the tool they choose — it's how they ask.",
+  publishedDate: "Apr 1, 2026",
+  readingTime: "8 min read",
+  tag: "Prompting",
+  coverImage: undefined as string | undefined,
+  content: `
+    <p>Here's something I say in nearly every workshop: the quality of your AI output is almost entirely determined by the quality of your input. And yet most people spend zero time thinking about how they ask.</p>
+    <p>This post is about the single biggest structural mistake I see — and the three-part fix that makes everything better.</p>
+    <h2>The mistake: treating AI like a search engine</h2>
+    <p>When people first start using AI tools, they naturally reach for the same habit they've built over years of Googling. Short, keyword-based queries. "Marketing ideas." "How to write an email." "Summary of meeting."</p>
+    <p>This works on Google because Google fills in the blanks with context from billions of web pages. AI doesn't have your context. It has to make it up — and it will, convincingly, and often wrongly.</p>
+    <h2>The fix: context, instruction, format</h2>
+    <p>Every good prompt has three components. Once you see them, you can't unsee them.</p>
+    <p><strong>Context</strong> tells the AI who you are, what you're working on, and what constraints matter. "I'm a B2B SaaS marketing manager preparing a nurture email for mid-funnel leads who attended our webinar last week..."</p>
+    <p><strong>Instruction</strong> is the actual ask. Be specific about what you want the AI to do — not just what output you want, but the action you want it to take. "Write a 200-word email that..."</p>
+    <p><strong>Format</strong> tells the AI how to structure the response. Do you want bullet points or paragraphs? A list of 5 options or a single recommendation? Formal or conversational?</p>
+    <p>When you combine all three, the output quality jumps dramatically. Not because the AI got smarter — but because you stopped asking it to guess.</p>
+  `,
+};
+---
+
+<Layout title={post.title} description={post.excerpt}>
+  <Navigation />
+
+  <main>
+    <!-- Post header -->
+    <section class="post-hero grid-bg">
+      <div class="section-container">
+        <div class="post-hero__inner reveal">
+          <div class="post-hero__meta">
+            {post.tag && <span class="tag">{post.tag}</span>}
+            <span class="post-meta-text">{post.publishedDate}</span>
+            {post.readingTime && <span class="post-meta-text">{post.readingTime}</span>}
+          </div>
+
+          <h1 class="post-hero__title">{post.title}</h1>
+          <p class="post-hero__excerpt">{post.excerpt}</p>
+        </div>
+      </div>
+    </section>
+
+    {post.coverImage && (
+      <div class="post-cover">
+        <div class="section-container">
+          <img src={post.coverImage} alt={post.title} class="post-cover__img" />
+        </div>
+      </div>
+    )}
+
+    <!-- Post content — RicosViewer React island will be wired here by features skill -->
+    <article class="post-body">
+      <div class="section-container">
+        <div class="post-content ricos-content" set:html={post.content} />
+      </div>
+    </article>
+
+    <hr class="section-divider" />
+
+    <!-- Back + CTA -->
+    <section class="post-footer-cta">
+      <div class="section-container">
+        <div class="post-footer-cta__inner reveal">
+          <a href="/blog" class="btn-outline">← Back to Blog</a>
+          <div class="post-cta-box">
+            <span class="tag tag-amber">Workshops</span>
+            <h3>Want to go deeper?</h3>
+            <p>These ideas come from the frameworks I teach. Browse the workshops.</p>
+            <a href="/workshops" class="btn-primary">Explore Workshops</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  /* is:global is REQUIRED — RicosViewer is a React island (client:only="react").
+     Astro scoped styles won't apply to React-rendered DOM. */
+
+  /* Force Ricos content to use design system colors — @wix/ricos hardcodes
+     rgb(0,0,0) on paragraphs/spans which makes text invisible on dark themes. */
+  .ricos-content,
+  .ricos-content p,
+  .ricos-content span,
+  .ricos-content li,
+  .ricos-content a {
+    color: var(--color-text) !important;
+    font-family: var(--font-body) !important;
+    font-size: 1.0625rem !important;
+    line-height: 1.8 !important;
+  }
+  .ricos-content h2,
+  .ricos-content h3,
+  .ricos-content h4 {
+    font-family: var(--font-display) !important;
+    color: var(--color-text) !important;
+    margin-top: 2.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .ricos-content h2 { font-size: 1.625rem !important; font-weight: 700 !important; }
+  .ricos-content h3 { font-size: 1.25rem !important; font-weight: 700 !important; }
+  .ricos-content a {
+    color: var(--color-primary) !important;
+    text-decoration: underline !important;
+    text-decoration-color: rgba(34,211,238,0.4) !important;
+  }
+  .ricos-content a:hover { color: var(--color-accent) !important; }
+  .ricos-content strong { color: var(--color-text) !important; font-weight: 700 !important; }
+  .ricos-content em { color: var(--color-text-muted) !important; }
+  .ricos-content blockquote {
+    border-left: 3px solid var(--color-primary) !important;
+    padding-left: 1.25rem !important;
+    margin-left: 0 !important;
+    color: var(--color-text-muted) !important;
+  }
+  .ricos-content ul, .ricos-content ol { padding-left: 1.5rem !important; }
+  .ricos-content li { color: var(--color-text) !important; margin-bottom: 0.5rem !important; }
+  .ricos-content img {
+    border-radius: var(--radius-lg) !important;
+    margin: 2rem 0 !important;
+    width: 100% !important;
+  }
+  .ricos-content pre, .ricos-content code {
+    background: var(--color-bg-alt) !important;
+    color: var(--color-primary) !important;
+    border-radius: var(--radius-sm) !important;
+    font-family: "Courier New", monospace !important;
+  }
+  .ricos-content hr {
+    border: none !important;
+    height: 1px !important;
+    background: rgba(34,211,238,0.15) !important;
+    margin: 2.5rem 0 !important;
+  }
+</style>
+
+<style>
+  /* Post hero */
+  .post-hero {
+    padding: 7rem 0 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .post-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 40%, rgba(34,211,238,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .post-hero__inner {
+    max-width: 760px;
+    display: flex; flex-direction: column; gap: 1.25rem;
+    position: relative;
+  }
+  .post-hero__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    flex-wrap: wrap;
+  }
+  .post-meta-text {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  .post-hero__title {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0;
+  }
+  .post-hero__excerpt {
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Cover image */
+  .post-cover { padding: 0 0 2rem; }
+  .post-cover__img {
+    width: 100%;
+    border-radius: var(--radius-xl);
+    aspect-ratio: 16/7;
+    object-fit: cover;
+  }
+
+  /* Post body */
+  .post-body { padding: 3rem 0 var(--space-section); }
+  .post-content {
+    max-width: 760px;
+  }
+  .post-content :global(h2) {
+    font-size: 1.625rem;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .post-content :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .post-content :global(p) {
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .post-content :global(strong) { color: var(--color-text); font-weight: 700; }
+
+  /* Footer CTA */
+  .post-footer-cta { padding: var(--space-section) 0; }
+  .post-footer-cta__inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .post-cta-box {
+    background: var(--color-secondary);
+    border: 1px solid rgba(34,211,238,0.15);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    max-width: 380px;
+    display: flex; flex-direction: column; gap: 0.875rem;
+  }
+  .post-cta-box h3 { font-size: 1.125rem; margin: 0; }
+  .post-cta-box p { color: var(--color-text-muted); font-size: 0.9rem; margin: 0; }
+
+  @media (max-width: 640px) {
+    .post-footer-cta__inner { flex-direction: column; }
+    .post-cta-box { max-width: 100%; }
+  }
+</style>

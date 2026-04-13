@@ -1,0 +1,211 @@
+---
+// CMS-managed page — features skill will replace sampleWorkshops with @wix/data query
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+import WorkshopCard from "../../components/WorkshopCard.astro";
+
+interface Workshop {
+  title: string;
+  description: string;
+  format: string;
+  duration: string;
+  audience: string;
+  price: string;
+  image?: string;
+  slug: string;
+}
+
+// Placeholder — features skill replaces with: const workshops = await queryDataItems(...)
+const workshops: Workshop[] = [
+  {
+    title: "AI Fundamentals Intensive",
+    description: "Master the mental models behind modern AI. From prompts to agents — no coding required. Perfect for professionals curious about what AI can actually do for them.",
+    format: "Online",
+    duration: "Half-day",
+    audience: "Beginners",
+    price: "$299",
+    slug: "ai-fundamentals",
+  },
+  {
+    title: "AI for Your Team",
+    description: "A hands-on workshop tailored to your industry and workflows. We identify high-impact use cases and build AI habits your whole team can adopt starting Monday.",
+    format: "In-Person",
+    duration: "Full-day",
+    audience: "Teams",
+    price: "From $1,200",
+    slug: "ai-for-teams",
+  },
+  {
+    title: "Executive AI Briefing",
+    description: "Cut through the noise. Understand AI risks, opportunities, and what your competitors are doing — in a focused 3-hour session built for decision-makers.",
+    format: "Hybrid",
+    duration: "3 hours",
+    audience: "Leaders",
+    price: "$499",
+    slug: "executive-ai-briefing",
+  },
+  {
+    title: "Prompt Engineering Deep Dive",
+    description: "Move beyond \"write me an email.\" Learn the techniques behind effective prompting: chains, personas, few-shot examples, structured outputs, and more.",
+    format: "Online",
+    duration: "4 hours",
+    audience: "Intermediate",
+    price: "$399",
+    slug: "prompt-engineering",
+  },
+  {
+    title: "AI Writing & Content",
+    description: "For marketers, writers, and communicators. Build a personal AI content workflow that saves hours without making your voice sound like everyone else's.",
+    format: "Online",
+    duration: "3 hours",
+    audience: "Writers & Marketers",
+    price: "$249",
+    slug: "ai-writing-content",
+  },
+  {
+    title: "Build Your First AI Agent",
+    description: "An intro to AI agents for non-developers. Learn how modern AI agents work, what they can automate, and how to scope your first project.",
+    format: "Online",
+    duration: "Half-day",
+    audience: "Intermediate",
+    price: "$349",
+    slug: "first-ai-agent",
+  },
+];
+---
+
+<Layout
+  title="Workshops"
+  description="Explore all ThinkAI workshops — from AI fundamentals to executive briefings to team intensives."
+>
+  <Navigation currentPath="/workshops" />
+
+  <main>
+    <!-- Page header -->
+    <section class="workshops-hero grid-bg">
+      <div class="section-container">
+        <div class="workshops-hero__content reveal">
+          <span class="tag">Workshops</span>
+          <h1 class="workshops-hero__headline">
+            Find your<br />
+            <em class="em-gradient">next level.</em>
+          </h1>
+          <p class="workshops-hero__sub">
+            From a first look at AI to deep technical dives — every workshop is practical, tailored, and built for real professionals.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- Workshops grid -->
+    <section class="workshops-list">
+      <div class="section-container">
+        <div class="workshops-grid">
+          {workshops.map((workshop, i) => (
+            <div class={`reveal reveal-${(i % 3) + 1}`}>
+              <WorkshopCard {...workshop} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- Custom training CTA -->
+    <section class="custom-cta">
+      <div class="section-container">
+        <div class="custom-cta__inner reveal">
+          <div class="custom-cta__text">
+            <span class="tag tag-amber">For organisations</span>
+            <h2>Need something custom?</h2>
+            <p>I regularly design bespoke workshops for teams, departments, and company-wide AI rollouts. Tell me what you're trying to achieve.</p>
+          </div>
+          <a href="/contact" class="btn-primary">Talk to me about custom training</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .workshops-hero {
+    padding: 8rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .workshops-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 70% at 60% 50%, rgba(34,211,238,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .workshops-hero__content {
+    max-width: 640px;
+    display: flex; flex-direction: column; gap: 1.25rem;
+  }
+  .workshops-hero__headline {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
+  }
+  .em-gradient {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .workshops-hero__sub {
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    max-width: 36rem;
+    margin: 0;
+  }
+
+  .workshops-list { padding: var(--space-section) 0; }
+  .workshops-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+
+  .custom-cta { padding: var(--space-section) 0; }
+  .custom-cta__inner {
+    background: var(--color-secondary);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: var(--radius-xl);
+    padding: 3rem 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+  }
+  .custom-cta__inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(245,158,11,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .custom-cta__text {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    position: relative;
+  }
+  .custom-cta__text h2 { font-size: clamp(1.25rem, 2vw, 1.75rem); margin: 0; }
+  .custom-cta__text p { color: var(--color-text-muted); font-size: 0.9375rem; max-width: 36rem; margin: 0; }
+  .custom-cta__inner .btn-primary { position: relative; flex-shrink: 0; }
+
+  @media (max-width: 640px) {
+    .workshops-grid { grid-template-columns: 1fr; }
+    .custom-cta__inner { padding: 2rem; }
+  }
+</style>

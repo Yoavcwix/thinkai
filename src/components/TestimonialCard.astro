@@ -1,0 +1,113 @@
+---
+interface Props {
+  quote: string;
+  authorName: string;
+  role?: string;
+  photo?: string;
+}
+
+const { quote, authorName, role, photo } = Astro.props;
+---
+
+<div class="testimonial-card">
+  <blockquote class="testimonial-card__quote">
+    <svg class="quote-mark" width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true">
+      <path d="M0 20V12C0 5.373 4.477 1.12 13.432 0l1.136 2.386C9.886 3.503 7.614 5.897 7 9.5H12V20H0ZM16 20V12C16 5.373 20.477 1.12 29.432 0l1.136 2.386C25.886 3.503 23.614 5.897 23 9.5H28V20H16Z" fill="rgba(34,211,238,0.2)"/>
+    </svg>
+    <p>{quote}</p>
+  </blockquote>
+
+  <footer class="testimonial-card__author">
+    <div class="testimonial-card__avatar">
+      {photo ? (
+        <img src={photo} alt={authorName} />
+      ) : (
+        <span>{authorName.charAt(0)}</span>
+      )}
+    </div>
+    <div>
+      <cite class="testimonial-card__name">{authorName}</cite>
+      {role && <p class="testimonial-card__role">{role}</p>}
+    </div>
+  </footer>
+</div>
+
+<style>
+  .testimonial-card {
+    background: var(--color-secondary);
+    border: 1px solid rgba(34, 211, 238, 0.1);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .testimonial-card:hover {
+    border-color: rgba(34, 211, 238, 0.25);
+    box-shadow: var(--glow-primary);
+  }
+
+  /* Quote */
+  .testimonial-card__quote {
+    margin: 0;
+    position: relative;
+  }
+  .quote-mark {
+    display: block;
+    margin-bottom: 0.875rem;
+    flex-shrink: 0;
+  }
+  .testimonial-card__quote p {
+    color: var(--color-text);
+    font-size: 1rem;
+    line-height: 1.7;
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* Author */
+  .testimonial-card__author {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(34, 211, 238, 0.08);
+  }
+
+  .testimonial-card__avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .testimonial-card__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .testimonial-card__avatar span {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-bg);
+  }
+
+  .testimonial-card__name {
+    display: block;
+    font-style: normal;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+  .testimonial-card__role {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    margin: 0.125rem 0 0;
+  }
+</style>
